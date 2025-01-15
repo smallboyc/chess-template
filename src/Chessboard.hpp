@@ -1,9 +1,12 @@
 #include <vector>
-#include "Pawn.hpp"
+#include "Cell.hpp"
+// #include "Pawn.hpp"
 
 class Chessboard {
 private:
-    std::vector<Pawn> m_pawns;
+    std::vector<Cell> m_board;
+    // Pieces
+    // std::vector<Pawn> m_pawns;
     /*std::vector<Rook> m_rooks;*/
     /*std::vector<Bishop> m_bishop;*/
     /*std::vector<Knight> m_knights;*/
@@ -11,6 +14,10 @@ private:
     /*King m_king;*/
 
 public:
-    Chessboard() = default;
-    void draw();
+    Chessboard()
+    {
+        create_board();
+    };
+    void create_board();
+    void display_board();
 };

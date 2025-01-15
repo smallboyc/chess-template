@@ -12,7 +12,9 @@ std::string Piece::get_symbol() const
         return "♘";
     else if (m_name == Name::Rook)
         return "♖";
-    return "P";
+    else if (m_name == Name::Pawn)
+        return "P";
+    return " ";
 }
 
 void Piece::set_position(int position)
@@ -21,6 +23,7 @@ void Piece::set_position(int position)
         m_position = position;
 }
 
-int Piece::direction() const {
+int Piece::direction() const
+{
     return get_color() == Color::Black ? -1 : 1;
 }

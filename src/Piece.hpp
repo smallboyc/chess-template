@@ -4,6 +4,8 @@
 enum class Color {
     White,
     Black,
+    /*default*/
+    None,
 };
 
 enum class Name {
@@ -13,15 +15,20 @@ enum class Name {
     Knight,
     Rook,
     Pawn,
+    /*default*/
+    None,
 };
 
 class Piece {
 public:
-    explicit Piece(const Name name = Name::Pawn, const Color color = Color::White, const int position = 0)
+    explicit Piece(const Name name = Name::None, const Color color = Color::None, const int position = 0)
         : m_name(name), m_color(color), m_position(position){};
+
+    Name  get_name() const { return m_name; };
+    Color get_color() const { return m_color; };
+    int   get_position() const { return m_position; };
+    //
     std::string get_symbol() const;
-    Color       get_color() const { return m_color; };
-    int         get_position() const { return m_position; };
     void        set_position(int position);
     void        select() { m_selected = true; }
     bool        is_selected() const { return m_selected; };
