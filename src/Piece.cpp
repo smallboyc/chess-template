@@ -1,10 +1,5 @@
 #include "Piece.hpp"
 
-ImVec4 Piece::get_color() const
-{
-    return m_color == Color::White ? ImVec4(1.0f, 1.0f, 1.0f, 1.0f) : ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
-}
-
 std::string Piece::get_symbol() const
 {
     if (m_name == Name::King)
@@ -17,5 +12,15 @@ std::string Piece::get_symbol() const
         return "♘";
     else if (m_name == Name::Rook)
         return "♖";
-    return "♙";
+    return "P";
+}
+
+void Piece::set_position(int position)
+{
+    if (position >= 0 && position < 64)
+        m_position = position;
+}
+
+int Piece::direction() const {
+    return get_color() == Color::Black ? -1 : 1;
 }

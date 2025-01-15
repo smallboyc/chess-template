@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Piece.hpp"
+#include "Pawn.hpp"
 #include "quick_imgui/quick_imgui.hpp"
 
 struct Cell {
@@ -22,7 +22,7 @@ std::vector<Cell> create_board(int board_size)
     return board;
 }
 
-void draw_cell(const Cell& cell, bool& toggle, const ImVec2 positions)
+void draw_cell(const Cell& cell, bool& toggle, const ImVec2 positions, Pawn& pawn)
 {
     ImVec4 current_color;
     ImVec4 text_color = {0.851f, 0.243f, 0.69f, 1.f};
@@ -44,7 +44,8 @@ void draw_cell(const Cell& cell, bool& toggle, const ImVec2 positions)
     std::string label         = cell.piece;
     std::string cell_position = std::to_string(cell.position);
     if (ImGui::Button((label.c_str()), positions))
-        std::cout << "Clicked button + " + cell_position + "\n";
+        pawn.move(cell.position);
+    // std::cout << "Clicked button + " + cell_position + "\n";
 
     ImGui::PopStyleColor(2);
     ImGui::PopID();
@@ -52,8 +53,7 @@ void draw_cell(const Cell& cell, bool& toggle, const ImVec2 positions)
 
 std::vector<ImFont*> load_fonts()
 {
-    ImGuiIO& io = ImGui::GetIO();
-
+    ImGuiIO&                       io = ImGui::GetIO();
     std::vector<ImFont*>           loaded_fonts;
     float                          font_size{16.0f};
     std::string                    fonts_path    = "../../assets/fonts/";
@@ -81,37 +81,36 @@ int main()
     ImGui::CreateContext();
     // ImGuiIO& io   = ImGui::GetIO();
     // ImFont*  font = io.Fonts->AddFontFromFileTTF("../../assets/fonts/roboto.ttf", 16.0f);
-    std::vector<ImFont*> fonts = load_fonts();
-    std::cout << fonts.size() << "\n";
     // std::vector<ImFont*> custom_fonts = load_fonts();
     // if (!custom_fonts.empty())
-    //     ImGui::PushFont(custom_fonts[0]);
     // ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[1]);
 
+    // TODO : Cell doit prendre aussi des pièces pour pouvoir afficher la position relative.
     std::vector<Cell> board = create_board(64);
 
-    bool  toggle = true;
-    float size   = 50.f;
-    char  king   = 'K';
+    bool  toggle = true; // switch color print on board!
+    float size   = 50.f; // cell size
 
-    Piece piece;
-    std::cout << piece.get_symbol() << "\n";
+    Pawn pawn;
+    std::cout << pawn.get_symbol() << "\n";
 
     quick_imgui::loop(
         "Chess",
-        [&]() {},
+        [&]() {
+            // std::vector<ImFont*> fonts = load_fonts();
+            // ImGui::PushFont(fonts[0]);
+        },
         [&]() {
             ImGui::Begin("Chess Board");
+
             for (Cell& cell : board)
             {
-                draw_cell(cell, toggle, {size, size});
+                draw_cell(cell, toggle, {size, size}, pawn);
                 if ((cell.position + 1) % 8 != 0)
                     ImGui::SameLine();
                 else
                     toggle = !toggle;
             }
-
-            board[8].piece = king;
             ImGui::End();
         }
     );
