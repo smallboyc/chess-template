@@ -9,8 +9,7 @@ int main()
     quick_imgui::loop(
         "Chess",
         [&]() {
-            // std::vector<ImFont*> fonts = load_fonts();
-            // ImGui::PushFont(fonts[0]);
+            ImGui::GetStyle().ItemSpacing = ImVec2(0.0f, 0.0f);
         },
         [&]() {
             ImGui::Begin("Chess Board");

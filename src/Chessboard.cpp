@@ -4,28 +4,30 @@
 #include <cstddef>
 #include <iostream>
 #include <memory>
+#include "Bishop.hpp"
+#include "King.hpp"
+#include "Knight.hpp"
 #include "Pawn.hpp"
-#include "Piece.hpp"
+#include "Queen.hpp"
+#include "Rook.hpp"
 #include "utils.hpp"
 
 void Chessboard::draw_cell(int cell_position, const Color& color, const std::unique_ptr<Piece>& piece) const
 {
-    ImVec4 text_color = {0.851f, 0.243f, 0.69f, 1.f};
     ImGui::PushID(cell_position);
     ImGui::PushStyleColor(ImGuiCol_Button, color_to_rgba(color));
-    ImGui::PushStyleColor(ImGuiCol_Text, text_color);
+    ImGui::PushStyleColor(ImGuiCol_Text, {0.0f, 0.0f, 0.0f, 1.0f});
     const char* cell_label = "";
     if (piece != nullptr)
         cell_label = piece->get_symbol().c_str();
 
-    if (ImGui::Button(cell_label, ImVec2(50.0f, 50.0f)))
-        std::cout << "Clicked button + " + std::to_string(cell_position) + "\n";
+    if (ImGui::Button(cell_label, ImVec2(70.0f, 70.0f)))
+        std::cout << "Case " + std::to_string(cell_position) + " => " + cell_label << "\n";
     ImGui::PopStyleColor(2);
     ImGui::PopID();
 
-    // new line if endline.
     if ((cell_position + 1) % static_cast<int>(std::sqrt(m_board.size())) != 0)
-        ImGui::SameLine();
+        ImGui::SameLine(0.0f, 0.0f);
 }
 
 void Chessboard::create_board()
@@ -44,7 +46,7 @@ void Chessboard::create_board()
         for (const PiecePosition& piece_position : initial_positions)
         {
             Color piece_color = get_piece_color(piece_position, i);
-            if (piece_color != Color::None)
+            if (piece_color != Color::None) /*<=> La case est vide, "la piece n'existe pas"s*/
             {
                 m_board[i] = create_piece(piece_color, piece_position);
                 break;
@@ -80,6 +82,15 @@ std::unique_ptr<Piece> Chessboard::create_piece(const Color& piece_color, const 
 {
     if (piece_position.piece_name == Name::Pawn)
         return std::make_unique<Pawn>(piece_color);
+    else if (piece_position.piece_name == Name::Knight)
+        return std::make_unique<Knight>(piece_color);
+    else if (piece_position.piece_name == Name::Bishop)
+        return std::make_unique<Bishop>(piece_color);
+    else if (piece_position.piece_name == Name::Rook)
+        return std::make_unique<Rook>(piece_color);
+    else if (piece_position.piece_name == Name::King)
+        return std::make_unique<King>(piece_color);
+    else if (piece_position.piece_name == Name::Queen)
+        return std::make_unique<Queen>(piece_color);
     return nullptr;
-    // TODO(smallboyc): implémenter la suite pour les autre pièces.
 }

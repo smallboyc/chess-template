@@ -10,14 +10,6 @@ ImVec4 color_to_rgba(const Color& color)
     return color == Color::Black ? ImVec4(0.541f, 0.518f, 0.761f, 1.0f) : ImVec4(0.859f, 0.839f, 0.792f, 1.0f);
 }
 
-// Color current_cell_color(bool toggle_color_row_start, Color& current_color_cell, size_t cell_position, int board_size)
-// {
-//     toggle_color_row_start = cell_position % static_cast<int>(std::sqrt(board_size)) == 0;
-
-//     if (!toggle_color_row_start)
-//         return current_color_cell == Color::Black ? Color::White : Color::Black;
-// }
-
 std::vector<ImFont*> load_fonts()
 {
     ImGuiIO&                       io = ImGui::GetIO();
