@@ -17,11 +17,11 @@ std::string Piece::get_symbol() const
     return " ";
 }
 
-void Piece::set_position(int position)
-{
-    if (position >= 0 && position < 64)
-        m_position = position;
-}
+// void Piece::set_position(int position)
+// {
+//     if (position >= 0 && position < 64)
+//         m_position = position;
+// }
 
 int Piece::direction() const
 {

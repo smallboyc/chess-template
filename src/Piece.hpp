@@ -1,12 +1,8 @@
+#pragma once
 #include <imgui.h>
 #include <string>
-
-enum class Color {
-    White,
-    Black,
-    /*default*/
-    None,
-};
+#include <vector>
+#include "utils.hpp"
 
 enum class Name {
     King,
@@ -19,14 +15,21 @@ enum class Name {
     None,
 };
 
+struct PiecePosition {
+    Name             piece_name;
+    std::vector<int> white_position;
+    std::vector<int> black_position;
+};
+
+
 class Piece {
 public:
-    explicit Piece(const Name name = Name::None, const Color color = Color::None, const int position = 0)
-        : m_name(name), m_color(color), m_position(position){};
+    explicit Piece(const Name name = Name::None, const Color color = Color::None)
+        : m_name(name), m_color(color){};
 
     Name  get_name() const { return m_name; };
     Color get_color() const { return m_color; };
-    int   get_position() const { return m_position; };
+    // int   get_position() const { return m_position; };
     //
     std::string get_symbol() const;
     void        set_position(int position);
@@ -38,7 +41,6 @@ public:
 private:
     Name  m_name;
     Color m_color;
-    int   m_position;
     bool  m_selected = false;
     bool  m_alive    = true;
 };

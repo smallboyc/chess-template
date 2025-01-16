@@ -1,5 +1,6 @@
+#pragma once
 #include <imgui.h>
-#include "Piece.hpp"
+#include "utils.hpp"
 
 class Cell {
 public:

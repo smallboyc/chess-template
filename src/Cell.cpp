@@ -4,7 +4,7 @@
 
 ImVec4 Cell::color_to_rgba() const
 {
-    return get_color() == Color::Black ? ImVec4(0.278f, 0.267f, 0.231f, 1.0f) : ImVec4(0.859f, 0.839f, 0.792f, 1.0f);
+    return get_color() == Color::Black ? ImVec4(0.541f, 0.518f, 0.761f, 1.0f) : ImVec4(0.859f, 0.839f, 0.792f, 1.0f);
 }
 
 void Cell::draw() const
