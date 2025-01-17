@@ -1,5 +1,7 @@
 #include "Pawn.hpp"
 
+void Pawn::move() {
+};
 // void Pawn::move(int position)
 // {
 

@@ -58,7 +58,7 @@ std::unique_ptr<Piece> Chessboard::create_piece(const Name& piece_name, const Co
 }
 
 // Display
-void Chessboard::display_board() const
+void Chessboard::display_board()
 {
     bool  toggle_color_row_start = false;
     Color current_color_cell     = Color::None;
@@ -68,24 +68,46 @@ void Chessboard::display_board() const
 
         if (!toggle_color_row_start)
             current_color_cell = current_color_cell == Color::Black ? Color::White : Color::Black;
-        draw_cell(i, current_color_cell, m_board[i]);
+        draw_cell(i, current_color_cell);
     }
 }
 
-void Chessboard::draw_cell(int cell_position, const Color& color, const std::unique_ptr<Piece>& piece) const
+void Chessboard::draw_cell(int cell_position, const Color& color)
 {
     ImGui::PushID(cell_position);
     ImGui::PushStyleColor(ImGuiCol_Button, color_to_rgba(color));
     ImGui::PushStyleColor(ImGuiCol_Text, {0.0f, 0.0f, 0.0f, 1.0f});
     const char* cell_label = "";
-    if (piece != nullptr)
-        cell_label = piece->get_symbol().c_str();
+    if (m_board[cell_position] != nullptr)
+        cell_label = m_board[cell_position]->get_symbol().c_str();
 
     if (ImGui::Button(cell_label, ImVec2(70.0f, 70.0f)))
-        std::cout << "Case " + std::to_string(cell_position) + " => " + cell_label << "\n";
+    {
+        // si je click sur une pièce, sa position devient m_selected_cell_position
+        if (!empty_cell(cell_position))
+            m_selected_piece_position = cell_position;
+
+        if (piece_selected() && empty_cell(cell_position))
+        {
+            // Checker si le move est legit pour la pièce sélectionnée = m_board[m_selected_cell_position]
+            // si oui alors std::move :
+            m_board[cell_position] = std::move(m_board[m_selected_piece_position]);
+            std::cout << "Case " + std::to_string(cell_position) + " => " + cell_label << "\n";
+        }
+    }
     ImGui::PopStyleColor(2);
     ImGui::PopID();
 
     if ((cell_position + 1) % static_cast<int>(std::sqrt(m_board.size())) != 0)
         ImGui::SameLine(0.0f, 0.0f);
+}
+
+bool Chessboard::empty_cell(int cell_position)
+{
+    return m_board[cell_position] == nullptr;
+}
+
+bool Chessboard::piece_selected() const
+{
+    return (m_selected_piece_position != -1);
 }

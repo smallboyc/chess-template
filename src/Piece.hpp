@@ -21,26 +21,26 @@ struct PiecePositions {
     std::vector<int> black_position;
 };
 
-
 class Piece {
 public:
     explicit Piece(const Name name = Name::None, const Color color = Color::None)
         : m_name(name), m_color(color){};
+    virtual ~Piece()               = default;
+    Piece(const Piece&)            = delete;
+    Piece& operator=(const Piece&) = delete;
+    Piece(Piece&&)                 = default; // :o
+    Piece& operator=(Piece&&)      = default;
 
-    Name  get_name() const { return m_name; };
-    Color get_color() const { return m_color; };
-    // int   get_position() const { return m_position; };
-    //
-    std::string get_symbol() const;
-    void        set_position(int position);
-    void        select() { m_selected = true; }
-    bool        is_selected() const { return m_selected; };
-    bool        is_alive() const { return m_alive; };
-    int         direction() const;
+    Name         get_name() const { return m_name; };
+    Color        get_color() const { return m_color; };
+    std::string  get_symbol() const;
+    void         select() { m_selected = true; }
+    bool         is_selected() const { return m_selected; };
+    int          direction() const;
+    virtual void move() = 0;
 
 private:
     Name  m_name;
     Color m_color;
     bool  m_selected = false;
-    bool  m_alive    = true;
 };
