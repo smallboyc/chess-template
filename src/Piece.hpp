@@ -15,7 +15,7 @@ enum class Name {
     None,
 };
 
-struct PiecePosition {
+struct PiecePositions {
     Name             piece_name;
     std::vector<int> white_position;
     std::vector<int> black_position;
