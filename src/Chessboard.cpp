@@ -83,22 +83,21 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
     ImGui::PushID(cell_position);
     ImGui::PushStyleColor(ImGuiCol_Button, color_to_rgba(color));
     ImVec4 cell_color;
+
     if (m_board[cell_position] != nullptr)
         cell_color = m_board[cell_position]->get_color() == Color::Black ? ImVec4(0.0f, 0.0f, 0.0f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 
     ImGui::PushStyleColor(ImGuiCol_Text, cell_color);
     if (ImGui::Button(cell_label, ImVec2(70.0f, 70.0f)))
     {
-        // Sélection d'une pièce à bouger : possible si la case n'est pas vide ET que c'est au tour de la couleur du joueur de jouer.
-        if (!empty_cell(cell_position) && piece_turn(cell_position))
-            m_selected_piece_position = cell_position;
-
-        // si une pièce est sélectionnée, je peux théoriquement la déplacer.
-        if (piece_selected() && piece_can_move(cell_position)) // TODO(smallboyc): remplacer empty_cell() par piece_can_move()
+        // si la case sélectionné contient une pièce et que au tour de sa couleur SINON si une pièce est sélectionné et que le choix du mouvement est autorisé
+        if (!empty_cell(cell_position) && piece_can_be_selected(cell_position))
         {
-            // Checker si le move est legit pour la pièce sélectionnée = m_board[m_selected_cell_position]
-            // si oui alors std::move :
-            m_board[cell_position] = std::move(m_board[m_selected_piece_position]);
+            m_selected_piece_position = cell_position;
+        }
+        else if (piece_selected() && m_board[m_selected_piece_position]->can_move(m_selected_piece_position, cell_position, m_board))
+        {
+            m_board[m_selected_piece_position]->move(m_selected_piece_position, cell_position, m_board);
             std::cout << "Case " + std::to_string(cell_position) + " => " + cell_label << "\n";
             clear_selection();
             set_piece_turn();
@@ -116,7 +115,7 @@ bool Chessboard::empty_cell(int cell_position)
     return m_board[cell_position] == nullptr;
 }
 
-bool Chessboard::piece_turn(int cell_position)
+bool Chessboard::piece_can_be_selected(int cell_position)
 {
     return m_board[cell_position]->get_color() == m_color_piece_turn;
 }
@@ -129,23 +128,4 @@ void Chessboard::set_piece_turn()
 bool Chessboard::piece_selected() const
 {
     return (m_selected_piece_position != -1);
-}
-
-bool Chessboard::piece_can_move(int cell_position)
-{
-    int from{m_selected_piece_position};
-    int to{cell_position};
-
-    // Déplacement ok si : case vide OU la pièce que je remplace est de couleur différente
-    if (m_board[to] == nullptr || m_board[from]->get_color() != m_board[to]->get_color())
-    {
-        std::cout << "De " << from << " à " << to << " pour " << m_board[from]->get_symbol() << "\n";
-        return true;
-    }
-
-    std::cout << "Pas de déplacement" << "\n";
-    return false;
-    // std::cout << "debug" << "\n";
-    // if (m_board[cell_position]->move(from, to, m_board))
-    //     return true;
 }

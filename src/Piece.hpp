@@ -35,13 +35,11 @@ public:
     Type         get_type() const { return m_type; };
     Color        get_color() const { return m_color; };
     std::string  get_symbol() const;
-    void         select() { m_selected = true; }
-    bool         is_selected() const { return m_selected; };
     int          direction() const;
-    virtual bool move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board) = 0;
+    virtual bool can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board) = 0;
+    void         move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board);
 
 private:
     Type  m_type;
     Color m_color;
-    bool  m_selected = false;
 };

@@ -6,8 +6,8 @@
 class Chessboard {
 private:
     std::array<std::unique_ptr<Piece>, 64> m_board;
-    int                                    m_selected_piece_position = -1;
     Color                                  m_color_piece_turn        = Color::White;
+    int                                    m_selected_piece_position = -1;
 
 public:
     Chessboard()
@@ -24,8 +24,7 @@ public:
     // check
     void clear_selection() { m_selected_piece_position = -1; };
     bool piece_selected() const;
-    bool piece_turn(int cell_position);
+    bool piece_can_be_selected(int cell_position);
     void set_piece_turn();
-    bool piece_can_move(int cell_position);
     bool empty_cell(int cell_position);
 };
