@@ -1,5 +1,6 @@
 #pragma once
 #include <imgui.h>
+#include <array>
 #include <string>
 #include <vector>
 #include "utils.hpp"
@@ -17,8 +18,8 @@ enum class Type {
 
 struct PiecePositions {
     Type             piece_type;
-    std::vector<int> white_position;
     std::vector<int> black_position;
+    std::vector<int> white_position;
 };
 
 class Piece {
@@ -37,7 +38,7 @@ public:
     void         select() { m_selected = true; }
     bool         is_selected() const { return m_selected; };
     int          direction() const;
-    virtual void move() = 0;
+    virtual bool move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board) = 0;
 
 private:
     Type  m_type;

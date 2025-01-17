@@ -1,20 +1,17 @@
 #include "Pawn.hpp"
+#include "Piece.hpp"
 
-void Pawn::move() {
-};
-// void Pawn::move(int position)
-// {
+bool Pawn::move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)
+{
+    int classic_move = 8 * direction();
+    int special_move = 2 * classic_move * direction();
 
-//     int current_position = get_position();
-//     if (special_start())
-//     {
-//         if (current_position + direction() * 16 == position) // move x2 (only on start)
-//             set_position(position);
-//         cancel_special_start();
-//     }
-//     else
-//     {
-//         if (current_position + direction() * 8 == position) // classic move
-//             set_position(position);
-//     }
-// }
+    for (int i{from}; i < to; i += classic_move)
+    {
+        if (board[i] != nullptr)
+            return false;
+    }
+
+    if (from + classic_move == to) // classic move
+        return true;
+}

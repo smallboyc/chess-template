@@ -19,5 +19,5 @@ std::string Piece::get_symbol() const
 
 int Piece::direction() const
 {
-    return get_color() == Color::Black ? -1 : 1;
+    return get_color() == Color::Black ? 1 : -1;
 }
