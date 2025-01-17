@@ -15,12 +15,12 @@
 void Chessboard::create_board()
 {
     std::array<PiecePositions, 6> initial_positions = {
-        PiecePositions{Name::Pawn, {8, 9, 10, 11, 12, 13, 14, 15}, {48, 49, 50, 51, 52, 53, 54, 55}},
-        PiecePositions{Name::Rook, {0, 7}, {56, 63}},
-        PiecePositions{Name::Knight, {1, 6}, {57, 62}},
-        PiecePositions{Name::Bishop, {2, 5}, {58, 61}},
-        PiecePositions{Name::Queen, {3}, {59}},
-        PiecePositions{Name::King, {4}, {60}}
+        PiecePositions{Type::Pawn, {8, 9, 10, 11, 12, 13, 14, 15}, {48, 49, 50, 51, 52, 53, 54, 55}},
+        PiecePositions{Type::Rook, {0, 7}, {56, 63}},
+        PiecePositions{Type::Knight, {1, 6}, {57, 62}},
+        PiecePositions{Type::Bishop, {2, 5}, {58, 61}},
+        PiecePositions{Type::Queen, {3}, {59}},
+        PiecePositions{Type::King, {4}, {60}}
     };
 
     for (const PiecePositions& piece_positions : initial_positions)
@@ -37,22 +37,22 @@ void Chessboard::set_piece_on_board(const PiecePositions& piece_positions, const
         current_piece_color = piece_positions.black_position;
 
     for (const int& piece_position : current_piece_color)
-        m_board[piece_position] = create_piece(piece_positions.piece_name, piece_color);
+        m_board[piece_position] = create_piece(piece_positions.piece_type, piece_color);
 }
 
-std::unique_ptr<Piece> Chessboard::create_piece(const Name& piece_name, const Color& piece_color)
+std::unique_ptr<Piece> Chessboard::create_piece(const Type& piece_type, const Color& piece_color)
 {
-    if (piece_name == Name::Pawn)
+    if (piece_type == Type::Pawn)
         return std::make_unique<Pawn>(piece_color);
-    else if (piece_name == Name::Knight)
+    else if (piece_type == Type::Knight)
         return std::make_unique<Knight>(piece_color);
-    else if (piece_name == Name::Bishop)
+    else if (piece_type == Type::Bishop)
         return std::make_unique<Bishop>(piece_color);
-    else if (piece_name == Name::Rook)
+    else if (piece_type == Type::Rook)
         return std::make_unique<Rook>(piece_color);
-    else if (piece_name == Name::King)
+    else if (piece_type == Type::King)
         return std::make_unique<King>(piece_color);
-    else if (piece_name == Name::Queen)
+    else if (piece_type == Type::Queen)
         return std::make_unique<Queen>(piece_color);
     return nullptr;
 }

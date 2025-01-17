@@ -4,6 +4,6 @@
 class Bishop : public Piece {
 public:
     explicit Bishop(const Color color = Color::None)
-        : Piece(Name::Bishop, color) {}
+        : Piece(Type::Bishop, color) {}
     void move() override;
 };

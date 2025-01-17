@@ -4,7 +4,7 @@
 #include <vector>
 #include "utils.hpp"
 
-enum class Name {
+enum class Type {
     King,
     Queen,
     Bishop,
@@ -16,22 +16,22 @@ enum class Name {
 };
 
 struct PiecePositions {
-    Name             piece_name;
+    Type             piece_type;
     std::vector<int> white_position;
     std::vector<int> black_position;
 };
 
 class Piece {
 public:
-    explicit Piece(const Name name = Name::None, const Color color = Color::None)
-        : m_name(name), m_color(color){};
+    explicit Piece(const Type type = Type::None, const Color color = Color::None)
+        : m_type(type), m_color(color){};
     virtual ~Piece()               = default;
     Piece(const Piece&)            = delete;
     Piece& operator=(const Piece&) = delete;
     Piece(Piece&&)                 = default; // :o
     Piece& operator=(Piece&&)      = default;
 
-    Name         get_name() const { return m_name; };
+    Type         get_type() const { return m_type; };
     Color        get_color() const { return m_color; };
     std::string  get_symbol() const;
     void         select() { m_selected = true; }
@@ -40,7 +40,7 @@ public:
     virtual void move() = 0;
 
 private:
-    Name  m_name;
+    Type  m_type;
     Color m_color;
     bool  m_selected = false;
 };

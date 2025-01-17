@@ -2,17 +2,17 @@
 
 std::string Piece::get_symbol() const
 {
-    if (m_name == Name::King)
+    if (m_type == Type::King)
         return "K";
-    else if (m_name == Name::Queen)
+    else if (m_type == Type::Queen)
         return "Q";
-    else if (m_name == Name::Bishop)
+    else if (m_type == Type::Bishop)
         return "B";
-    else if (m_name == Name::Knight)
+    else if (m_type == Type::Knight)
         return "N";
-    else if (m_name == Name::Rook)
+    else if (m_type == Type::Rook)
         return "R";
-    else if (m_name == Name::Pawn)
+    else if (m_type == Type::Pawn)
         return "P";
     return " ";
 }

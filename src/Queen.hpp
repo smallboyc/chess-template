@@ -4,6 +4,6 @@
 class Queen : public Piece {
 public:
     explicit Queen(const Color color = Color::None)
-        : Piece(Name::Queen, color) {}
+        : Piece(Type::Queen, color) {}
     void move() override;
 };
