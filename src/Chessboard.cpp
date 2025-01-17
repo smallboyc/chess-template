@@ -2,7 +2,6 @@
 #include <imgui.h>
 #include <cmath>
 #include <cstddef>
-#include <iostream>
 #include <memory>
 #include "Bishop.hpp"
 #include "King.hpp"
@@ -98,7 +97,6 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
         else if (piece_selected() && m_board[m_selected_piece_position]->can_move(m_selected_piece_position, cell_position, m_board))
         {
             m_board[m_selected_piece_position]->move(m_selected_piece_position, cell_position, m_board);
-            std::cout << "Case " + std::to_string(cell_position) + " => " + cell_label << "\n";
             clear_selection();
             set_piece_turn();
         }
