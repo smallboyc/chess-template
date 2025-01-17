@@ -1,4 +1,5 @@
 #include "Piece.hpp"
+#include <iostream>
 
 std::string Piece::get_symbol() const
 {
@@ -21,7 +22,6 @@ int Piece::direction() const
 {
     return get_color() == Color::Black ? 1 : -1;
 }
-
 void Piece::move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)
 {
     board[to] = std::move(board[from]);

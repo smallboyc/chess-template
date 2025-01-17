@@ -89,8 +89,7 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
     ImGui::PushStyleColor(ImGuiCol_Text, cell_color);
     if (ImGui::Button(cell_label, ImVec2(70.0f, 70.0f)))
     {
-        // si la case sélectionné contient une pièce et que au tour de sa couleur SINON si une pièce est sélectionné et que le choix du mouvement est autorisé
-        if (!empty_cell(cell_position) && piece_can_be_selected(cell_position))
+        if (piece_can_be_selected(cell_position))
         {
             m_selected_piece_position = cell_position;
         }
@@ -108,14 +107,9 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
         ImGui::SameLine(0.0f, 0.0f);
 }
 
-bool Chessboard::empty_cell(int cell_position)
-{
-    return m_board[cell_position] == nullptr;
-}
-
 bool Chessboard::piece_can_be_selected(int cell_position)
 {
-    return m_board[cell_position]->get_color() == m_color_piece_turn;
+    return m_board[cell_position] != nullptr && m_board[cell_position]->get_color() == m_color_piece_turn;
 }
 
 void Chessboard::set_piece_turn()

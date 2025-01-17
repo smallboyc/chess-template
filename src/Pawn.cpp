@@ -4,10 +4,6 @@
 
 bool Pawn::can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)
 {
-    // 2 pièces de même couleur ne peuvent pas se prendre mutuellement.
-    if (board[to] != nullptr && board[from]->get_color() == board[to]->get_color())
-        return false;
-
     int classic_move = 8 * direction();
     int special_move = 2 * classic_move;
 
@@ -33,6 +29,5 @@ bool Pawn::can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& bo
             m_step++;
             return true;
         }
-
     return false;
 }
