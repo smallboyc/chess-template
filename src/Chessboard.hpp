@@ -26,4 +26,7 @@ public:
     bool piece_selected() const;
     bool piece_can_be_selected(int cell_position);
     void set_piece_turn();
+    //
+    bool king_in_check();
+    bool checkmate();
 };
