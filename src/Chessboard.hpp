@@ -27,7 +27,9 @@ public:
     bool   piece_can_be_selected(int cell_position);
     void   set_piece_turn();
     ImVec4 get_piece_icon_color(int cell_position);
-    //
-    bool king_in_check();
+
+    //end_game?
+    int get_king_position();
+    bool king_is_in_check();
     bool checkmate();
 };
