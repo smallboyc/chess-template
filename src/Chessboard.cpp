@@ -100,6 +100,11 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
             set_piece_turn();
         }
     }
+    // On dessine le SCOPE de la pièce sélectionnée :
+    // A chaque draw d'une cellule on regarde si celle-ci correspond à la cellule où le user click, et on fait des trucs!
+    if (m_selected_piece_position != -1)
+        m_board[m_selected_piece_position]->draw_scope(m_selected_piece_position, cell_position, m_board);
+
     ImGui::PopStyleColor(2);
     ImGui::PopID();
 

@@ -10,6 +10,21 @@ ImVec4 color_to_rgba(const Color& color)
     return color == Color::Black ? ImVec4(0.541f, 0.518f, 0.761f, 1.0f) : ImVec4(0.859f, 0.839f, 0.792f, 1.0f);
 }
 
+void draw_cell_border(ImU32 scope_color)
+{
+    ImVec2 button_min = ImGui::GetItemRectMin();
+    ImVec2 button_max = ImGui::GetItemRectMax();
+
+    ImGui::GetWindowDrawList()->AddRect(
+        button_min,
+        button_max,
+        scope_color,
+        0.0f,
+        ImDrawFlags_None,
+        3.0f //
+    );
+}
+
 std::vector<ImFont*> load_fonts()
 {
     ImGuiIO&                       io = ImGui::GetIO();

@@ -1,5 +1,4 @@
 #include "Piece.hpp"
-#include <iostream>
 
 std::string Piece::get_symbol() const
 {
