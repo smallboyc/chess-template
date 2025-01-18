@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include <cmath>
 #include <cstddef>
+#include <iostream>
 #include <memory>
 #include "Bishop.hpp"
 #include "King.hpp"
@@ -92,6 +93,7 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
         if (piece_can_be_selected(cell_position))
         {
             m_selected_piece_position = cell_position;
+            std::cout << m_selected_piece_position << "\n";
         }
         else if (piece_selected() && m_board[m_selected_piece_position]->can_move(m_selected_piece_position, cell_position, m_board))
         {
@@ -100,10 +102,11 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
             set_piece_turn();
         }
     }
+
     // On dessine le SCOPE de la pièce sélectionnée :
     // A chaque draw d'une cellule on regarde si celle-ci correspond à la cellule où le user click, et on fait des trucs!
-    if (m_selected_piece_position != -1)
-        m_board[m_selected_piece_position]->draw_scope(m_selected_piece_position, cell_position, m_board);
+    // if (m_selected_piece_position != -1)
+    //     m_board[m_selected_piece_position]->draw_scope(m_selected_piece_position, cell_position, m_board);
 
     ImGui::PopStyleColor(2);
     ImGui::PopID();
