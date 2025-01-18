@@ -44,3 +44,9 @@ private:
     Type  m_type;
     Color m_color;
 };
+
+// Piece move
+bool same_line_move(int from, int to);
+bool same_colone_move(int from, int to);
+bool diagonal_move(int distance, int pattern);
+bool move_is_legit(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board, int direction, int pattern);

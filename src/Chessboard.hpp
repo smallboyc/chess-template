@@ -22,10 +22,11 @@ public:
     void display_board();
     void draw_cell(int cell_position, const Color& color);
     // check
-    void clear_selection() { m_selected_piece_position = -1; };
-    bool piece_selected() const;
-    bool piece_can_be_selected(int cell_position);
-    void set_piece_turn();
+    void   clear_selection() { m_selected_piece_position = -1; };
+    bool   piece_selected() const;
+    bool   piece_can_be_selected(int cell_position);
+    void   set_piece_turn();
+    ImVec4 get_piece_icon_color(int cell_position);
     //
     bool king_in_check();
     bool checkmate();

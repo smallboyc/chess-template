@@ -57,3 +57,6 @@ std::vector<ImFont*> load_fonts()
 // std::vector<ImFont*> custom_fonts = load_fonts();
 // if (!custom_fonts.empty())
 // ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[1]);
+
+// Piece move
+

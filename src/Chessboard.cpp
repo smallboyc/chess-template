@@ -82,18 +82,12 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
 
     ImGui::PushID(cell_position);
     ImGui::PushStyleColor(ImGuiCol_Button, color_to_rgba(color));
-    ImVec4 cell_color;
-
-    if (m_board[cell_position] != nullptr)
-        cell_color = m_board[cell_position]->get_color() == Color::Black ? ImVec4(0.0f, 0.0f, 0.0f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-
-    ImGui::PushStyleColor(ImGuiCol_Text, cell_color);
+    ImGui::PushStyleColor(ImGuiCol_Text, get_piece_icon_color(cell_position));
     if (ImGui::Button(cell_label, ImVec2(70.0f, 70.0f)))
     {
         if (piece_can_be_selected(cell_position))
         {
             m_selected_piece_position = cell_position;
-            std::cout << m_selected_piece_position << "\n";
         }
         else if (piece_selected() && m_board[m_selected_piece_position]->can_move(m_selected_piece_position, cell_position, m_board))
         {
@@ -113,6 +107,12 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
 
     if ((cell_position + 1) % static_cast<int>(std::sqrt(m_board.size())) != 0)
         ImGui::SameLine(0.0f, 0.0f);
+}
+
+ImVec4 Chessboard::get_piece_icon_color(int cell_position)
+{
+    if (m_board[cell_position] != nullptr)
+        return m_board[cell_position]->get_color() == Color::Black ? ImVec4(0.0f, 0.0f, 0.0f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 bool Chessboard::piece_can_be_selected(int cell_position)

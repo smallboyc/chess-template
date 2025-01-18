@@ -25,3 +25,27 @@ void Piece::move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board
 {
     board[to] = std::move(board[from]);
 }
+
+// utils piece
+bool same_line_move(int from, int to)
+{
+    return (from / 8 == to / 8);
+}
+
+bool same_colone_move(int from, int to)
+{
+    return (from % 8 == to % 8);
+}
+
+bool diagonal_move(int distance, int pattern)
+{
+    return distance % pattern == 0;
+}
+
+bool move_is_legit(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board, int direction, int pattern)
+{
+    for (int i{from + pattern * direction}; i != to; i += pattern * direction)
+        if (board[i] != nullptr)
+            return false;
+    return true;
+}

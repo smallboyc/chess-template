@@ -1,5 +1,6 @@
 #pragma once
 #include <imgui.h>
+
 enum class Color {
     White,
     Black,
@@ -14,3 +15,4 @@ enum class Color {
 
 ImVec4 color_to_rgba(const Color& color);
 void   draw_cell_border(ImU32 scope_color);
+
