@@ -13,6 +13,3 @@ bool Knight::can_move(const int from, const int to, [[maybe_unused]] std::array<
 
     return false;
 };
-
-void Knight::draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) {
-};

@@ -12,7 +12,3 @@ bool Bishop::can_move(const int from, const int to, std::array<std::unique_ptr<P
         return move_is_legit(from, to, board, direction, 9);
     return false;
 };
-
-void Bishop::draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) {
-    
-};
