@@ -12,6 +12,7 @@ public:
     bool classic_move(int from, int attempted_move, std::array<std::unique_ptr<Piece>, 64>& board);
     bool capture_move(int from, int attempted_move, std::array<std::unique_ptr<Piece>, 64>& board);
     //
+    void check_for_obstacles(int selected_piece_position, std::array<std::unique_ptr<Piece>, 64>& board) override {};
     void draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) override;
     bool is_vulnerable_to_in_passing() const override { return m_vulnerable; };
     // scope

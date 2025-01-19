@@ -36,9 +36,10 @@ public:
     Color        get_color() const { return m_color; };
     std::string  get_symbol() const;
     int          direction() const;
-    virtual void draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) = 0;
-    virtual bool can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)                                 = 0;
     virtual bool is_vulnerable_to_in_passing() const { return false; };
+    virtual bool can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)                                 = 0;
+    virtual void check_for_obstacles(int selected_piece_position, std::array<std::unique_ptr<Piece>, 64>& board)           = 0;
+    virtual void draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) = 0;
     void         move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board);
 
 private:

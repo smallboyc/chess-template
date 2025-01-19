@@ -1,6 +1,8 @@
 #include "Rook.hpp"
+#include <imgui.h>
 #include <algorithm>
 #include <iostream>
+#include "Piece.hpp"
 #include "utils.hpp"
 
 bool Rook::can_move(const int from, const int to, std::array<std::unique_ptr<Piece>, 64>& board)
@@ -15,32 +17,44 @@ bool Rook::can_move(const int from, const int to, std::array<std::unique_ptr<Pie
     return false;
 };
 
-void Rook::check_for_obstacles(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board)
+bool obstacle_not_already_saved(const std::vector<int>& obstacles, const int obstacle_position)
 {
-    if ((same_colone_move(selected_piece_position, cell_position) || same_line_move(selected_piece_position, cell_position)) && cell_position != selected_piece_position)
+    return (std::find(obstacles.begin(), obstacles.end(), obstacle_position) == obstacles.end());
+}
+
+// avec cette fonction j'arrive à dire quelles sont les pièces les plus proches de la pièce courante.
+void Rook::check_for_obstacles(int selected_piece_position, std::array<std::unique_ptr<Piece>, 64>& board)
+{
+    std::vector<int> col_obstacles;
+    std::vector<int> line_obstacles;
+    for (int target_cell{0}; target_cell < board.size(); target_cell++)
     {
-        if ((std::find(m_obstacles.begin(), m_obstacles.end(), cell_position) == m_obstacles.end()) && is_obstacle(selected_piece_position, cell_position, board))
+        if (is_obstacle(selected_piece_position, target_cell, board) && obstacle_not_already_saved(m_obstacles, target_cell))
         {
-            // TODO(smallboyc): ne pousser que les obstacles les plus proches.
-            m_obstacles.push_back(cell_position);
+            if (same_colone_move(selected_piece_position, target_cell))
+                col_obstacles.push_back(target_cell);
+            else if (same_line_move(selected_piece_position, target_cell))
+                line_obstacles.push_back(target_cell);
         }
     }
+    // TODO(smallboyc): filtrer les différents vector pour ne garder que la position la plus proche du la selected_piece.
+    std::cout << col_obstacles.size() << "\n";
+    std::cout << line_obstacles.size() << "\n";
 }
 
 bool Rook::is_obstacle(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board)
 {
-    return (board[cell_position] != nullptr && board[selected_piece_position]->get_color() == board[cell_position]->get_color());
+    return (cell_position != selected_piece_position && board[cell_position] != nullptr);
 }
 
-void Rook::draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board)
-{
+void Rook::draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) {
     // vérifier si il y a des obstacles sur les chemins de la tour sur
-    check_for_obstacles(selected_piece_position, cell_position, board);
-    std::cout << m_obstacles.size() << "\n";
-    for (const int obstacle_position : m_obstacles)
-    {
-        std::cout << obstacle_position << "\n";
-    }
+    // check_for_obstacles(selected_piece_position, cell_position, board);
+    // std::cout << m_obstacles.size() << "\n";
+    // for (const int obstacle_position : m_obstacles)
+    // {
+    //     std::cout << obstacle_position << "\n";
+    // }
     // if (!forbidden_cell && (same_colone_move(selected_piece_position, cell_position) || same_line_move(selected_piece_position, cell_position)))
     //     draw_cell_border(IM_COL32(0, 255, 0, 255));
     // else

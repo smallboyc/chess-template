@@ -85,10 +85,10 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
     ImGui::PushStyleColor(ImGuiCol_Text, get_piece_icon_color(cell_position));
     if (ImGui::Button(cell_label, ImVec2(70.0f, 70.0f)))
     {
-        if (piece_can_be_selected(cell_position))
+        if (piece_can_be_selected(cell_position)) // Sélectionner une pièce
         {
             m_selected_piece_position = cell_position;
-        }
+        } // Si une pièce est sélectionné et que sa tentative de mouvemement est correcte => mouvement de la pièce
         else if (piece_selected() && m_board[m_selected_piece_position]->can_move(m_selected_piece_position, cell_position, m_board))
         {
             m_board[m_selected_piece_position]->move(m_selected_piece_position, cell_position, m_board);
@@ -97,6 +97,10 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
             clear_selection();
             set_piece_turn();
         }
+
+        // si la pièce est simplement sélectionnée => enregistrer ses obstacles.
+        if (piece_selected())
+            m_board[m_selected_piece_position]->check_for_obstacles(m_selected_piece_position, m_board);
     }
 
     // On dessine le SCOPE de la pièce sélectionnée :
