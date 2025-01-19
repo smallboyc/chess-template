@@ -91,9 +91,10 @@ void Chessboard::draw_cell(int cell_position, const Color& color)
         }
         else if (piece_selected() && m_board[m_selected_piece_position]->can_move(m_selected_piece_position, cell_position, m_board))
         {
+          
             m_board[m_selected_piece_position]->move(m_selected_piece_position, cell_position, m_board);
-            if (king_is_in_check())
-                std::cout << "Echec" << "\n";
+            // if (king_is_in_check())
+            //     std::cout << "Echec" << "\n";
             clear_selection();
             set_piece_turn();
         }
@@ -153,6 +154,3 @@ bool Chessboard::king_is_in_check()
     }
     return false;
 }
-
-//J'ai une idéeeeee
-// maintenant pour un échec et mat, c'est tester après king_is_in_check(), le can_move du roi dans toutes les directions autour de lui, et si il est in_check sur tout, alors il a perdu.

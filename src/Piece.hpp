@@ -38,6 +38,7 @@ public:
     int          direction() const;
     virtual void draw_scope(int selected_piece_position, int cell_position, std::array<std::unique_ptr<Piece>, 64>& board) = 0;
     virtual bool can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)                                 = 0;
+    virtual bool is_vulnerable_to_in_passing() const { return false; };
     void         move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board);
 
 private:

@@ -1,7 +1,7 @@
 #include "Queen.hpp"
 #include "Piece.hpp"
 
-bool Queen::can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)
+bool Queen::can_move(const int from, const int to, std::array<std::unique_ptr<Piece>, 64>& board)
 {
     int direction = 1;
     if (to - from < 0)

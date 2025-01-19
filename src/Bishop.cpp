@@ -1,7 +1,7 @@
 #include "Bishop.hpp"
 #include "Piece.hpp"
 
-bool Bishop::can_move(int from, int to, std::array<std::unique_ptr<Piece>, 64>& board)
+bool Bishop::can_move(const int from, const int to, std::array<std::unique_ptr<Piece>, 64>& board)
 {
     int direction = 1;
     if (to - from < 0)
